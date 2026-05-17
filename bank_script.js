@@ -1,4 +1,5 @@
- let currentBalance = 10000;
+        
+        let currentBalance = 10000;
         let currentAction = '';
         const correctPin = '1234';
 
