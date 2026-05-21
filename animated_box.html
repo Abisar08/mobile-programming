@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Corner Loop Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrollbars */
+            background-color: #e9ede8;
+        }
+
+        /* The Box Styling */
+        #animatedBox {
+            width: 80px;
+            height: 80px;
+            background-color: #ff4757; /* Initial Color (Red) */
+            position: absolute;
+            top: 20px;   /* Start Top */
+            left: 20px; /* Start Left */
+            opacity: 1; 
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+    </style>
+    
+    <!-- Including jQuery and jQuery UI (Required for smooth color animation) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+</head>
+<body>
+
+    <div id="animatedBox"></div>
+
+    <script>
+        $(document).ready(function() {
+            
+            // Function containing the animation sequence
+            function runLoopAnimation() {
+                
+                // 1. Slide Down (Top-Left to Bottom-Left)
+                $('#animatedBox').animate({
+                    top: '85vh',        // Move down
+                    opacity: 0.3       // Change opacity to low
+                }, 1000, 'easeInOutQuad', function() {
+                    
+                    // Change color smoothly using jQuery UI
+                    $(this).animate({ backgroundColor: "#1e90ff" }, 500); 
+
+                    // 2. Slide Right (Bottom-Left to Bottom-Right)
+                    $(this).animate({
+                        left: '85vw',   // Move right
+                        opacity: 1.0    // Change opacity to full
+                    }, 1000, 'easeInOutQuad', function() {
+                        
+                        $(this).animate({ backgroundColor: "#2ed573" }, 500);
+
+                        // 3. Slide Up (Bottom-Right to Top-Right)
+                        $(this).animate({
+                            top: '20px',   // Move up
+                            opacity: 0.5   // Medium opacity
+                        }, 1000, 'easeInOutQuad', function() {
+                            
+                            $(this).animate({ backgroundColor: "#ffa502" }, 500);
+
+                            // 4. Slide Left (Top-Right to Top-Left)
+                            $(this).animate({
+                                left: '20px',  // Move left
+                                opacity: 1.0   // Full opacity
+                            }, 1000, 'easeInOutQuad', function() {
+                                
+                                $(this).animate({ backgroundColor: "#ff4757" }, 500, function() {
+                                    // RECURSION: Call the function again to create the infinite loop
+                                    runLoopAnimation();
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+
+            // Start the animation
+            runLoopAnimation();
+        });
+    </script>
+
+</body>
+</html>
